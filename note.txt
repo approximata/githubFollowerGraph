@@ -35,3 +35,30 @@
   }
 }
 
+
+{
+  user(login: "approximata") {
+    id
+    name
+    login
+    avatarUrl(size: 10)
+    followers(first: 10) {
+      edges {
+        node {
+          id
+          name
+          login
+          avatarUrl(size: 10)
+          followers(first: 10) {
+            edges {
+              node {
+                id
+                name
+                login
+                avatarUrl(size: 10)
+              }
+            }
+          }
+        }
+      }
+    }

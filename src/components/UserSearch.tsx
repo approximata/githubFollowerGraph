@@ -1,31 +1,9 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost'
-import UserRelationMap from './UserRelationMap';
+import FollowerMap from './FollowerMap';
+import { SearchResult, UserVars, UserNode } from '../interface/interface';
 
-
-interface User {
-    node: {
-        id: string,
-        email: string,
-        login: string,
-        name: string
-    }    
-}
-
-interface SearchResult {
-    search: {
-        edges: User[]
-    }
-}
-
-interface UserVars {
-    loginSearch: string;
-}
-
-interface UserLogin {
-    userLogin: string;
-}
 
 const GET_USER_RESULT = gql`
   query getUserResult($loginSearch: String!) {
@@ -34,9 +12,9 @@ const GET_USER_RESULT = gql`
         node {
           ... on User {
             id
-            email
             login
             name
+            avatarUrl(size:10)
           }
         }
       }
@@ -81,7 +59,7 @@ const UserSearch = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data && data.search && data.search.edges.map((user: User) => (
+                                {data && data.search && data.search.edges.map((user: UserNode) => (
                                     <tr key={user.node.id}
                                         onClick={() => setSelectedUserLogin(user.node.login)}
                                     >
@@ -94,7 +72,7 @@ const UserSearch = () => {
                     )}
             </div>
             <div>
-                {selectedUserLogin ? (<UserRelationMap userLogin={selectedUserLogin}/>) : <></>}
+                {selectedUserLogin ? (<FollowerMap userLogin={selectedUserLogin}/>) : <></>}
             </div>
            
         </div>
