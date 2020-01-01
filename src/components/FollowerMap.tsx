@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import * as d3 from 'd3';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost'
 import { UserLogin, UserData, GraphFormat } from '../interface/interface';
@@ -19,7 +20,7 @@ const GET_USER_FOLLOWERS = gql`
             name
             login
             avatarUrl(size: 10)
-            followers(first: 10) {
+            followers(first: 2) {
                 edges {
                 node {
                     id
@@ -40,20 +41,77 @@ const FollowerMap = (userLogin: UserLogin) => {
 
     const [state, setState] = useState();
 
+    const refContainer = useRef<HTMLDivElement>(null);
+
     const graph: GraphFormat = { nodes: [], links: [] };
 
-    const { loading, data, error } = useQuery<UserData, UserLogin>(
+    const { loading, data } = useQuery<UserData, UserLogin>(
         GET_USER_FOLLOWERS,
         { 
             variables: userLogin,
             onCompleted: data => {
-                console.log(data)
-                setState(convertUserToD3Graph(data.user, graph))
+                setState(convertUserToD3Graph(data.user, graph));
             }
         }
     );
 
+    const drawNetwork = (graph: GraphFormat, maxWidth: number) => {
+        if (graph === undefined) return;
 
+        const ticked = () => {
+            link
+                .attr("x1", (d: any) => d!.source.x)
+                .attr("y1", (d: any) => d!.source.y)
+                .attr("x2", (d: any) => d!.target.x)
+                .attr("y2", (d: any) => d!.target.y)
+
+            node
+                .attr("cx", (d: any) => d!.x + 6)
+                .attr("cy", (d: any) => d!.y - 6)
+        }
+
+        const margin = { top: 10, right: 30, bottom: 30, left: 40 },
+            width = maxWidth - margin.left - margin.right,
+            height = 800 - margin.top - margin.bottom;
+
+        const svg = d3.select(refContainer.current)
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+
+            const link = svg
+                .selectAll("line")
+                .data(graph.links)
+                .enter()
+                .append("line")
+                .style("stroke", "#aaa")
+
+            const node = svg
+                .selectAll("circle")
+                .data(graph.nodes)
+                .enter()
+                .append("circle")
+                .attr("r", 20)
+                .style("fill", "#69b3a2")
+
+            const simulation = d3.forceSimulation(graph.nodes as d3.SimulationNodeDatum[])                 
+                .force("link", d3.forceLink()                             
+                    .id((d: any) => d.id)                    
+                    .links(graph.links as d3.SimulationLinkDatum<d3.SimulationNodeDatum>[])                                    
+                )
+                .force("charge", d3.forceManyBody().strength(-400))         
+                .force("center", d3.forceCenter(width / 2, height / 2)) 
+                .on("end", ticked);
+    }
+
+    useEffect(() => {
+        const width = refContainer.current ? refContainer.current.offsetWidth : 0;
+
+        drawNetwork(state, width )
+    });
 
     return (
         <div>
@@ -69,6 +127,7 @@ const FollowerMap = (userLogin: UserLogin) => {
                 {
                    JSON.stringify(state)
                 }
+                    <div ref={refContainer}></div>
             </div>
             )}
         </div>

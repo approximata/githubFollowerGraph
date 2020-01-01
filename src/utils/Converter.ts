@@ -2,8 +2,6 @@ import { User, FollowerList, GraphFormat, GraphLink, GraphNode, UserNode } from 
 
 
 export const convertUserToD3Graph = (user: User, graph: GraphFormat) => {
-
-
     const addLinks = (followers: FollowerList) => {
         followers.edges.forEach((follower: UserNode) => {
             const link: GraphLink = { source: follower.node.id, target: user.id}
