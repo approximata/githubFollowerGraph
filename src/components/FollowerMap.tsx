@@ -20,7 +20,7 @@ const GET_USER_FOLLOWERS = gql`
             name
             login
             avatarUrl(size: 10)
-            followers(first: 2) {
+            followers(first: 10) {
                 edges {
                 node {
                     id
@@ -72,7 +72,7 @@ const FollowerMap = (userLogin: UserLogin) => {
 
         const margin = { top: 10, right: 30, bottom: 30, left: 40 },
             width = maxWidth - margin.left - margin.right,
-            height = 800 - margin.top - margin.bottom;
+            height = 600 - margin.top - margin.bottom;
 
         const svg = d3.select(refContainer.current)
             .append("svg")
@@ -82,35 +82,42 @@ const FollowerMap = (userLogin: UserLogin) => {
             .attr("transform",
                 "translate(" + margin.left + "," + margin.top + ")");
 
-            const link = svg
-                .selectAll("line")
-                .data(graph.links)
-                .enter()
-                .append("line")
-                .style("stroke", "#aaa")
+        const link = svg
+            .selectAll("line")
+            .data(graph.links)
+            .enter()
+            .append("line")
+            .style("stroke", "#aaa")
 
-            const node = svg
-                .selectAll("circle")
-                .data(graph.nodes)
-                .enter()
-                .append("circle")
-                .attr("r", 20)
-                .style("fill", "#69b3a2")
+        const node = svg
+            .selectAll("circle")
+            .data(graph.nodes)
+            .enter()
+            .append("svg:image")
+            .attr("r", 20)
+            .style("fill", "#eee");
+        
+        const image = node.append("svg:image")
+            .attr("xlink:href", (d: any) => d.avatar)
+            .attr("x", (d: any) => -25)
+            .attr("y", (d: any) => -25)
+            .attr("height", 50)
+            .attr("width", 50);
 
-            const simulation = d3.forceSimulation(graph.nodes as d3.SimulationNodeDatum[])                 
-                .force("link", d3.forceLink()                             
-                    .id((d: any) => d.id)                    
-                    .links(graph.links as d3.SimulationLinkDatum<d3.SimulationNodeDatum>[])                                    
-                )
-                .force("charge", d3.forceManyBody().strength(-400))         
-                .force("center", d3.forceCenter(width / 2, height / 2)) 
-                .on("end", ticked);
+        const simulation = d3.forceSimulation(graph.nodes as d3.SimulationNodeDatum[])                 
+            .force("link", d3.forceLink()                             
+                .id((d: any) => d.id)                    
+                .links(graph.links as d3.SimulationLinkDatum<d3.SimulationNodeDatum>[])                                    
+            )
+            .force("charge", d3.forceManyBody().strength(-400))         
+            .force("center", d3.forceCenter(width / 2, height / 2)) 
+            .on("end", ticked);
     }
 
     useEffect(() => {
         const width = refContainer.current ? refContainer.current.offsetWidth : 0;
 
-        drawNetwork(state, width )
+        drawNetwork(state, width)
     });
 
     return (
@@ -119,15 +126,7 @@ const FollowerMap = (userLogin: UserLogin) => {
             <p>Loading ...</p> ) :
             (
             <div>
-                <h2>original</h2>
-                {
-                    JSON.stringify(data)
-                }
-                <h2>formated</h2>
-                {
-                   JSON.stringify(state)
-                }
-                    <div ref={refContainer}></div>
+                <div ref={refContainer}></div>
             </div>
             )}
         </div>

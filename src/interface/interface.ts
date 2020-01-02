@@ -42,7 +42,8 @@ export interface UserVars {
 
 export interface GraphNode {
     id: string,
-    name: string
+    name: string,
+    avatar: HttpLink
 }
 
 export interface GraphLink {
