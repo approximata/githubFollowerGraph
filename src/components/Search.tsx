@@ -87,7 +87,7 @@ const Search = (props: {selectedUser: String, setSelectedUserLogin: React.Dispat
                                 <SearchIcon />
                             </div>
                             <InputBase
-                                placeholder="Searcf for user..."
+                                placeholder="Search for user..."
                                 classes={{
                                     root: classes.inputRoot,
                                     input: classes.inputInput,

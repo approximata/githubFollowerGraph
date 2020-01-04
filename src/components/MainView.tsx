@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 import { Drawer, CssBaseline, Toolbar, AppBar, IconButton, Typography, Hidden } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-
+import GitHubIcon from '@material-ui/icons/GitHub';
 
 import Search from './Search'; 
 import FollowerMap from './FollowerMap';
@@ -80,7 +80,7 @@ const MainView = () => {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap>
-                        GitHub Sociometric
+                        <GitHubIcon/> GitHub Follower Sociometric
                     </Typography>
                 </Toolbar>
             </AppBar>

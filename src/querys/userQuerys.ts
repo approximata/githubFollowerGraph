@@ -27,6 +27,14 @@ export const GET_USER_FOLLOWERS = gql`
                     name
                     login
                     avatarUrl(size: ${config.avatarSize})
+                    followers(first: ${config.first}) {
+                    edges {
+                        node {
+                            id
+                            name
+                            login
+                            avatarUrl(size: ${config.avatarSize})
+                }
                 }
                 }
             }
@@ -34,6 +42,8 @@ export const GET_USER_FOLLOWERS = gql`
         }
         }
     }
+}
+}
 }
 `;
 
