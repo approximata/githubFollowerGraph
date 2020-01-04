@@ -11,6 +11,7 @@ export const convertUserToD3Graph = (user: User, graph: GraphFormat) => {
 
     const graphNode: GraphNode = {id: user.id, name: user.name, avatar: user.avatarUrl}
 
+    // TODO filter duplicate nodes
     graph.nodes.push(graphNode)
 
     if (user.followers) {
