@@ -9,7 +9,7 @@ export const convertUserToD3Graph = (user: User, graph: GraphFormat) => {
         })
     }
 
-    const graphNode: GraphNode = {id: user.id, name: user.name, avatar: user.avatarUrl}
+    const graphNode: GraphNode = {id: user.id, name: user.name, login: user.login, avatar: user.avatarUrl}
 
     // TODO filter duplicate nodes
     graph.nodes.push(graphNode)

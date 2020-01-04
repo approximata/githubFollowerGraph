@@ -43,6 +43,7 @@ export interface UserVars {
 export interface GraphNode {
     id: string,
     name: string,
+    login: string,
     avatar: HttpLink
 }
 
