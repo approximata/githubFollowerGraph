@@ -2,7 +2,7 @@ import React from 'react';
 import { ApolloProvider } from '@apollo/react-common';
 import { ApolloClient, InMemoryCache, HttpLink } from 'apollo-boost' 
 import { setContext } from 'apollo-link-context'
-import UserSearch from './components/UserSearch';
+import MainView from './components/MainView';
 
 const httpLink = new HttpLink({ uri: 'https://api.github.com/graphql' });
 
@@ -32,7 +32,7 @@ const App = () => {
 
   return (
     <ApolloProvider client={client}>
-      <UserSearch/>
+      <MainView />
     </ApolloProvider>
   )
 
