@@ -7,7 +7,7 @@ import { GET_USER_FOLLOWERS } from '../querys/userQuerys';
 
 
 const FollowerMap = (userLogin: UserLogin) => {
-
+    
     const refContainer = useRef<HTMLDivElement>(null);
 
     const graph: GraphFormat = { nodes: [], links: [] };
@@ -23,8 +23,9 @@ const FollowerMap = (userLogin: UserLogin) => {
     );
 
     useEffect(() => {
-        const width = refContainer.current ? refContainer.current.offsetWidth : 0;
-        drawNetwork(refContainer.current, graph, width)
+        const width = refContainer.current ? refContainer.current.clientWidth : 400;
+        const height = (window.innerHeight ?? 600) - 24;
+        drawNetwork(refContainer.current, graph, width, height)
     });
 
     return (

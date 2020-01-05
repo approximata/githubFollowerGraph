@@ -44,7 +44,8 @@ export interface GraphNode {
     id: string,
     name: string,
     login: string,
-    avatar: HttpLink
+    avatar: HttpLink,
+    isCore?: boolean
 }
 
 export interface GraphLink {

@@ -5,7 +5,6 @@ const config = {
     first: 10
 }
 
-
 export const GET_USER_FOLLOWERS = gql`
   query getUserFolowers($userLogin: String!) {
     user(login: $userLogin) {

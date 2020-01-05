@@ -2,16 +2,15 @@ import { GraphFormat } from "../interface/interface";
 import * as d3 from "d3";
 import { SimulationNodeDatum, ForceLink } from 'd3';
 
-export const drawNetwork = (container: HTMLDivElement | null, graph: GraphFormat, maxWidth: number) => {
+export const drawNetwork = (container: HTMLDivElement | null, graph: GraphFormat, maxWidth: number, maxHeight: number) => {
     if (graph === undefined || container === null) return "Loading...";
 
     const config = {
         "avatar_size": 30
-    }
+    };
 
-    const margin = { top: 10, right: 30, bottom: 30, left: 40 },
-        width = maxWidth - margin.left - margin.right,
-        height = 600 - margin.top - margin.bottom;
+    const width = maxWidth; 
+    const height = maxHeight;
 
     const ticked = () => {
         link
@@ -60,11 +59,9 @@ export const drawNetwork = (container: HTMLDivElement | null, graph: GraphFormat
 
     const svg = d3.select(container)
         .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform",
-            "translate(" + margin.left + "," + margin.top + ")");
+        .attr("width", width )
+        .attr("height", height)
+        .append("g");
 
 
     const defs = svg.append("svg:defs");
@@ -101,14 +98,21 @@ export const drawNetwork = (container: HTMLDivElement | null, graph: GraphFormat
     const circles = node.append("svg:circle")
         .attr("cx", 0)
         .attr("cy", 0)
-        .attr("r", config.avatar_size / 2)
-        .attr("opacity", 0.9)
-        .style("fill", "#fff")
+        .attr("r", (d: any) => (d.isCore ? config.avatar_size / 1.2 : config.avatar_size / 2))
+        .attr("opacity", 0.98)
         .style("fill", (d: any) => (`url(#grump_avatar_${d.id})`))
         .call(drag)
 
     node.append("title")
         .text(function (d: any) { return d.login; });
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const lablesForCore = node.append("text")
+        .text((d: any) => (d.isCore ? d.login : ''))
+        .style("fill", "coral")
+        .style("font-size", "10px")
+        .attr('x', config.avatar_size / 2 )
+        .attr('y', config.avatar_size / 2);
 
     simulation
         .nodes(graph.nodes as SimulationNodeDatum[])

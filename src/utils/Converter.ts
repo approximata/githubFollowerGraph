@@ -12,6 +12,10 @@ export const convertUserToD3Graph = (user: User, graph: GraphFormat) => {
 
     const graphNode: GraphNode = {id: user.id, name: user.name, login: user.login, avatar: user.avatarUrl}
 
+    if(graph.nodes.length === 1){
+        graph.nodes[0]!.isCore = true;
+    }
+
     if(!graph.nodes.some(node => (node?.id === graphNode.id))){
         graph.nodes.push(graphNode)
     }
