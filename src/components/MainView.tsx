@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 import { Drawer, CssBaseline, Toolbar, AppBar, IconButton, Typography, Hidden, createMuiTheme } from '@material-ui/core';
-import { ThemeProvider } from "@material-ui/styles";
+import { ThemeProvider } from '@material-ui/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import GitHubIcon from '@material-ui/icons/GitHub';
 
