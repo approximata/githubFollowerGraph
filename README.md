@@ -1,4 +1,4 @@
-# Github Follower Sociomap
+# Github Follower Graph
 
 Toy project implementing a simple a flat [sociogaph](https://en.wikipedia.org/wiki/Sociometry) about the followers of a github user.
 The project aims to experiment with the latest github APIs ([GraphQL API v4](https://developer.github.com/v4/)).

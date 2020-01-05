@@ -85,7 +85,7 @@ const MainView = () => {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" noWrap>
-                            <GitHubIcon/> GitHub Follower Sociometric
+                            <GitHubIcon/> GitHub Follower Graph
                         </Typography>
                     </Toolbar>
                 </AppBar>
