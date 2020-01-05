@@ -20,6 +20,7 @@ $ echo "REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN={your token}" >> .env
 ### Launch the project locally
 
 ```bash
+$ yarn install
 $ npm install
 $ npm run start
 ```
