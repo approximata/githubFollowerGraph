@@ -25,3 +25,4 @@ $ npm run start-dev
 ```
 Once the build done server is up under http://localhost:3000.
 
+[Here](https://gitfollowersocio.herokuapp.com/) is a deployed version of the project
