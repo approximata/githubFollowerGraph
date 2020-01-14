@@ -1,63 +1,64 @@
-import { HttpLink } from "apollo-boost";
-
 export interface User {
-        id: string,
-        name: string
-        login: string,
-        avatarUrl: HttpLink
-        followers?: FollowerList
-};
+  id: string;
+  name: string;
+  login: string;
+  avatarUrl: string;
+  followers?: FollowerList;
+}
 
 export interface UserData {
-        user: User
-};
+  user: User;
+}
 
 export interface UserNode {
-    node:{
-        id: string,
-        name: string
-        login: string,
-        avatarUrl: HttpLink
-        followers?: FollowerList
-    }    
-};
+  node: {
+    id: string;
+    name: string;
+    login: string;
+    avatarUrl: string;
+    followers?: FollowerList;
+  };
+}
 
 export interface FollowerList {
-    edges: UserNode[]
-};
+  edges: UserNode[];
+}
 
-export interface UserLogin {
-    userLogin: string;
-};
+export interface UserLoginName {
+  userLoginName: string;
+}
 
 export interface SearchResult {
-    search: {
-        edges: UserNode[]
-    }
-};
+  search: {
+    edges: UserNode[];
+  };
+}
 
 export interface UserVars {
-    loginSearch: string;
-};
+  loginSearch: string;
+}
 
 export interface GraphNode {
-    id: string,
-    name: string,
-    login: string,
-    avatar: HttpLink,
-    isCore?: boolean
-};
+  id: string;
+  name: string;
+  login: string;
+  avatar: string;
+  isCore?: boolean;
+}
 
 export interface GraphLink {
-    source: string,
-    target: string
-};
+  source: string;
+  target: string;
+}
 
 export interface GraphFormat {
-    nodes: [
-        GraphNode?
-    ],
-    links: [
-        GraphLink?
-    ]
-};
+  nodes: [GraphNode?];
+  links: [GraphLink?];
+}
+
+export interface SearchProps {
+  selectedUser: string;
+  setSelectedUserLoginName: React.Dispatch<React.SetStateAction<string>>;
+  searchTerm: string;
+  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+}

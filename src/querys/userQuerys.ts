@@ -1,13 +1,13 @@
-import { gql } from 'apollo-boost';
+import { gql } from "apollo-boost";
 
 const config = {
-    avatarSize: 48,
-    first: 10
-}
+  avatarSize: 48,
+  first: 10
+};
 
 export const GET_USER_FOLLOWERS = gql`
-  query getUserFolowers($userLogin: String!) {
-    user(login: $userLogin) {
+  query getUserFolowers($userLoginName: String!) {
+    user(login: $userLoginName) {
         id
         name
         login
