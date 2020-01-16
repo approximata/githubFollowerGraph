@@ -10,8 +10,10 @@ import {
 export const convertUserToD3Graph = (user: User, graph: GraphFormat) => {
   const addLinks = (followers: FollowerList) => {
     followers.edges.forEach((follower: UserNode) => {
-      const link: GraphLink = { source: follower.node.id, target: user.id };
-      graph.links.push(link);
+      graph.links.push({
+        source: follower.node.id,
+        target: user.id
+      } as GraphLink);
     });
   };
 
@@ -36,6 +38,5 @@ export const convertUserToD3Graph = (user: User, graph: GraphFormat) => {
       convertUserToD3Graph(follower.node, graph)
     );
   }
-
   return graph;
 };
